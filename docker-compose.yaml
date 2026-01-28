@@ -1,0 +1,40 @@
+services:
+  postgresql:
+    image: postgres:14-alpine
+    container_name: hitalent_tt-psql
+    ports:
+      - "25432:5432"
+    environment:
+      - POSTGRES_DB=hitalent_tt
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d hitalent_tt" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  migrations:
+    image: kukymbr/goose-docker
+    container_name: migrations
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    environment:
+      - GOOSE_DRIVER=postgres
+      - GOOSE_DBSTRING=postgresql://postgres:postgres@hitalent_tt-psql:5432/hitalent_tt?sslmode=disable
+    volumes:
+      - ./internal/storage/psql/migrations:/migrations
+    command: ["goose -dir /migrations up"]
+  app:
+    image: hitalent_tt:local
+    container_name: hitalent_tt-app
+    depends_on:
+      - migrations
+      - postgresql
+    environment:
+      - CONFIG_PATH=config/config.yaml
+    ports:
+      - "8080:8081"

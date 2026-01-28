@@ -1,0 +1,6 @@
+storage_path: "host=postgresql user=postgres dbname=hitalent_tt password=postgres sslmode=disable"
+log_level: "debug"
+http_server:
+  address: "0.0.0.0:8081"
+  timeout: 5s
+  idle_timeout: 5s
