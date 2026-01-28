@@ -40,7 +40,7 @@ func (s *Storage) GetChatByID(chatId int, messageCount int) (*model.Chat, error)
 		}
 	}
 
-	messageResult := s.db.Order("id desc").Limit(messageCount).Find(&message, model.Message{ChatID: chatId})
+	messageResult := s.db.Order("created_at desc").Limit(messageCount).Find(&message, model.Message{ChatID: chatId})
 	if messageResult.Error != nil {
 		return nil, messageResult.Error
 	}
