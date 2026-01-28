@@ -3,16 +3,17 @@ package api
 import (
 	"bytes"
 	"fmt"
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
-	mock_api "hitalent_tt/internal/api/mocks"
-	"hitalent_tt/model"
-
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
+
+	"hitalent_tt/model"
+
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
+	mock_api "hitalent_tt/internal/api/mocks"
 )
 
 func TestHandler_SendMessage(t *testing.T) {
