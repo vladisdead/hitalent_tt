@@ -23,4 +23,4 @@ DELETE /chats/{id} - удаление чата со всеми его сообщ
 
 `docker build -t hitalent_tt:local .`
 
-`docker-compose-up`
+`docker-compose up`

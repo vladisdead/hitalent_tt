@@ -19,6 +19,7 @@ const (
 	MessageTextError = "message must be lower 5000 or not empty"
 	MethodNotAllowed = "method not allowed"
 	ParsingBodyError = "error parsing body"
+	LimitError       = "limit must be lower 100"
 	ChatNotFound     = "chat not found"
 	DefaultLimit     = 20
 )

@@ -65,7 +65,6 @@ func (s *Server) GetChatByIDHandler(w http.ResponseWriter, r *http.Request) {
 		s.log.Error(ParsingBodyError)
 		return
 	}
-	//TODO: пофиксить пустой лимит
 
 	var limit int
 
@@ -77,6 +76,12 @@ func (s *Server) GetChatByIDHandler(w http.ResponseWriter, r *http.Request) {
 			s.log.Error(ParsingBodyError)
 			return
 		}
+	}
+
+	if limit > 100 {
+		http.Error(w, LimitError, http.StatusBadRequest)
+		s.log.Error(LimitError)
+		return
 	}
 
 	if limit == 0 {
