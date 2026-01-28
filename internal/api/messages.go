@@ -44,7 +44,6 @@ func (s *Server) SendMessage(w http.ResponseWriter, r *http.Request) {
 
 	if strings.TrimSpace(messageText) == "" || utf8.RuneCountInString(message.Text) > 5000 {
 		http.Error(w, MessageTextError, http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
 		s.log.Error(MessageTextError)
 		return
 	}
@@ -52,7 +51,6 @@ func (s *Server) SendMessage(w http.ResponseWriter, r *http.Request) {
 	chatMessage, err := s.provider.SendMessage(chatID, message.Text)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		w.WriteHeader(http.StatusInternalServerError)
 		s.log.Error(err.Error())
 		return
 	}
